@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Blog;
 use App\Models\User;
+use App\Models\Follower;
+use Illuminate\Http\Request;
 
 class UserProfileController extends Controller
 {
@@ -18,14 +20,25 @@ class UserProfileController extends Controller
         {
             $profile = auth()->user();
             if ($profile == null) { abort(404); }
+
+            $post_count = Blog::where('user_id', $profile->id)->count();
+            $follower_count = Follower::where('user_id', $profile->id)->count();
+            $following_count = Follower::where('follower_id', $profile->id)->count();
         }
         else {
             $profile = User::where('username', $username)->first();
             if ($profile == null) { abort(404); }
+
+            $post_count = Blog::where('user_id', $profile->id)->count();
+            $follower_count = Follower::where('user_id', $profile->id)->count();
+            $following_count = Follower::where('follower_id', $profile->id)->count();
         }
 
         return view('user.profile', [
-            'profile' => $profile
+            'profile' => $profile,
+            'post_count' => $post_count,
+            'follower_count' => $follower_count,
+            'following_count' => $following_count
         ]);
     }
 
