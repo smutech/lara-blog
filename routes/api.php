@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\FollowController;
+use App\Http\Controllers\Api\FollowerController;
+use App\Http\Controllers\Api\FollowingController;
 use App\Http\Controllers\Api\UserPostsController;
 
 /*
@@ -32,4 +34,7 @@ Route::group([], function () {
 
     Route::post('follow/{id}', [FollowController::class, 'store'])->name('follow-user');
     Route::get('follow-status/{user_id}/{follower_id}', [FollowController::class, 'show'])->name('show-follow-status');
+
+    Route::get('followers/{id}', [FollowerController::class, 'show'])->name('followers');
+    Route::get('following/{id}', [FollowingController::class, 'show'])->name('following');
 });
