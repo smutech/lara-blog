@@ -11,9 +11,10 @@ use App\Http\Resources\FollowerResource;
 class FollowController extends Controller
 {
     /**
-     * Store a newly created resource in storage.
+     * Store a new follower resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  int  $user_id
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $user_id)
@@ -41,9 +42,10 @@ class FollowController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the follow status of the currently authenticated user.
      *
-     * @param  \App\Models\Follower  $follower
+     * @param  int  $user_id
+     * @param  int  $follower_id
      * @return \Illuminate\Http\Response
      */
     public function show($user_id, $follower_id)
