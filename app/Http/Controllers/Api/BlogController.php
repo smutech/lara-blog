@@ -11,7 +11,7 @@ use App\Http\Resources\BlogResource;
 class BlogController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the blog resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -25,7 +25,7 @@ class BlogController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified blog resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
