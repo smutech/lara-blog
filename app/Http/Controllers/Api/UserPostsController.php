@@ -11,8 +11,10 @@ use App\Http\Resources\BlogResource;
 class UserPostsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the user post resource.
      *
+     * @return \Illuminate\Http\Request $request
+     * @return \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request, User $user)
