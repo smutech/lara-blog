@@ -15,9 +15,38 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <!-- Followers -->
+    <div id="follower-box" class="hidden fixed top-36 mt-1.5 right-0 bottom-0 left-0 mx-auto my-auto bg-white h-2/3 w-72 min-w-63 max-w-full border border-gray-200 shadow-lg rounded">
+        <div class="flex justify-between items-center bg-gray-50 px-4 py-2 border-b">
+            <h1 class="text-gray-600 text-xl font-bold pt-1">
+                Followers
+            </h1>
+            <button id="hide-follower-box-btn" class="hover:bg-gray300 text-gray-700 hover:opacity-60 text-2xl font-bold -mr-3 px-2.5">
+                &times;
+            </button>
+        </div>
+
+        <div id="follower-list" class="overflow-auto" style="height: calc(100% - 3rem);"></div>
+    </div>
+
+    <!-- Following -->
+    <div id="following-box" class="hidden fixed top-36 mt-1.5 right-0 bottom-0 left-0 mx-auto my-auto bg-white h-2/3 w-72 min-w-63 max-w-full overflow-hidden border border-gray-200 shadow-lg rounded">
+        <div class="flex justify-between items-center bg-gray-50 px-4 py-2 border-b">
+            <h1 class="text-gray-600 text-xl font-bold pt-1">
+                Following
+            </h1>
+            <button id="hide-following-box-btn" class="hover:bg-gray300 text-gray-700 hover:opacity-60 text-2xl font-bold -mr-3 px-2.5">
+                &times;
+            </button>
+        </div>
+
+        <div id="following-list" class="overflow-auto" style="height: calc(100% - 3rem);"></div>
+    </div>
+
+
+    <div class="py-3">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="flex flex-col justify-center">
                         <div class="flex justify-center items-center py-5">
@@ -48,6 +77,18 @@
                         <div class="flex justify-center items-center text-xl py-2">
                             {{ $profile->username }}
                         </div>
+                        
+                        <ul class="flex justify-center items-center text-xl py-2">
+                            <li class="mx-2">
+                                {{ $post_count }}
+                                {{ $post_count > 1 ? 'posts' : 'post' }}
+                            </li>
+                            <li id="follower_count" class="hover:text-gray-600 mx-2 cursor-pointer">
+                                {{ $follower_count }}
+                                {{ $follower_count > 1 ? 'followers' : 'follower' }}
+                            </li>
+                            <li id="following_count" class="hover:text-gray-600 mx-2 cursor-pointer">{{ $following_count }} following</li>
+                        </ul>
 
                         <div class="flex justify-center items-center text-gray-600 text-lg py-2">
                             Joined {{ $profile->created_at->diffForHumans() }}
@@ -57,4 +98,97 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Show follower box and load the list of followers
+        let follower_box = document.getElementById('follower-box');
+        let hide_follower_box_btn = document.getElementById('hide-follower-box-btn');
+        let follower_list = document.getElementById('follower-list');
+        let followers_loaded = false;
+
+        document.getElementById('follower_count')
+            .addEventListener('click', () => {
+                follower_box.classList.remove('hidden');
+                hide_follower_box_btn.focus();
+
+                if (! followers_loaded)
+                {
+                    follower_list.innerHTML = `<div class="text-gray-700 text-xl text-center py-5">Loading...</div>`;
+
+                    fetch('{{ route('followers', $profile->id) }}')
+                        .then(res => res.json())
+                        .then(followers => {
+                            follower_list.innerHTML = '';
+
+                            followers.data.forEach(follower => {
+                                follower_item = `
+                                    <a href="/profile/${follower.user.username}" class="flex justify-between items-center hover:bg-gray-100 border-b border-gray-100 px-4 py-2">
+                                        <div>
+                                            <div class="text-gray-800 hover:text-gray-900 font-semibold text-lg">${follower.user.name}</div>
+                                            <span class="text-gray-600 hover:text-gray-700">${follower.user.username}</span>
+                                        </div>
+                                        <button id="profile-btn" class="bg-blue-500 text-white px-3 py-1 rounded">
+                                            Profile
+                                        </button>
+                                    </a>
+                                `;
+
+                                follower_list.innerHTML += follower_item;
+                            });
+
+                            followers_loaded = true;
+                        })
+                        .catch(err => console.error(err));
+                }
+            });
+
+        // Close follower box
+        hide_follower_box_btn.addEventListener('click', () => follower_box.classList.add('hidden'));
+
+        
+        // Show following box and load the list of following
+        let following_box = document.getElementById('following-box');
+        let hide_following_box_btn = document.getElementById('hide-following-box-btn');
+        let following_list = document.getElementById('following-list');
+        let following_loaded = false;
+
+        document.getElementById('following_count')
+            .addEventListener('click', () => {
+                following_box.classList.remove('hidden');
+                hide_following_box_btn.focus();
+
+                if (! following_loaded)
+                {
+                    following_list.innerHTML = `<div class="text-gray-700 text-xl text-center py-5">Loading...</div>`;
+
+                    fetch('{{ route('following', $profile->id) }}')
+                        .then(res => res.json())
+                        .then(following => {
+                            following_list.innerHTML = '';
+
+                            following.data.forEach(following => {
+                                following_item = `
+                                    <a href="/profile/${following.user.username}" class="flex justify-between items-center hover:bg-gray-100 border-b border-gray-100 px-4 py-2">
+                                        <div>
+                                            <div class="text-gray-800 hover:text-gray-900 font-semibold text-lg">${following.user.name}</div>
+                                            <span class="text-gray-600 hover:text-gray-700">${following.user.username}</span>
+                                        </div>
+                                        <button id="profile-btn" class="bg-blue-500 text-white px-3 py-1 rounded">
+                                            Profile
+                                        </button>
+                                    </a>
+                                `;
+
+                                following_list.innerHTML += following_item;
+                            });
+
+                            following_loaded = true;
+                        })
+                        .catch(err => console.error(err));
+                }
+            });
+
+        // Close following box
+        hide_following_box_btn.addEventListener('click', () => following_box.classList.add('hidden'));
+    </script>
 </x-app-layout>
