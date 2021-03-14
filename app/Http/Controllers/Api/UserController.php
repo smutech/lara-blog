@@ -10,7 +10,7 @@ use App\Http\Resources\UserResource;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the user resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -20,7 +20,7 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified user resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
