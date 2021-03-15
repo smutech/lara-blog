@@ -13,7 +13,8 @@ class Blog extends Model
     protected $fillable = [
         'slug',
         'title',
-        'body'
+        'body',
+        'image'
     ];
     
     public function user()
