@@ -16,12 +16,12 @@
     </x-slot>
 
     <!-- Followers -->
-    <div id="follower-box" class="hidden fixed top-36 mt-1.5 right-0 bottom-0 left-0 mx-auto my-auto bg-white h-2/3 w-72 min-w-63 max-w-full border border-gray-200 shadow-lg rounded">
+    <div id="follower-box" class="hidden fixed top-36 mt-1.5 right-0 bottom-0 left-0 mx-auto my-auto bg-white h-2/3 w-80 min-w-63 max-w-full overflow-hidden border border-gray-200 shadow-lg rounded">
         <div class="flex justify-between items-center bg-gray-50 px-4 py-2 border-b">
             <h1 class="text-gray-600 text-xl font-bold pt-1">
                 Followers
             </h1>
-            <button id="hide-follower-box-btn" class="hover:bg-gray300 text-gray-700 hover:opacity-60 text-2xl font-bold -mr-3 px-2.5">
+            <button id="hide-follower-box-btn" class="text-gray-700 hover:opacity-60 text-2xl font-bold -mr-3 px-2.5">
                 &times;
             </button>
         </div>
@@ -30,12 +30,12 @@
     </div>
 
     <!-- Following -->
-    <div id="following-box" class="hidden fixed top-36 mt-1.5 right-0 bottom-0 left-0 mx-auto my-auto bg-white h-2/3 w-72 min-w-63 max-w-full overflow-hidden border border-gray-200 shadow-lg rounded">
+    <div id="following-box" class="hidden fixed top-36 mt-1.5 right-0 bottom-0 left-0 mx-auto my-auto bg-white h-2/3 w-80 min-w-63 max-w-full overflow-hidden border border-gray-200 shadow-lg rounded">
         <div class="flex justify-between items-center bg-gray-50 px-4 py-2 border-b">
             <h1 class="text-gray-600 text-xl font-bold pt-1">
                 Following
             </h1>
-            <button id="hide-following-box-btn" class="hover:bg-gray300 text-gray-700 hover:opacity-60 text-2xl font-bold -mr-3 px-2.5">
+            <button id="hide-following-box-btn" class="text-gray-700 hover:opacity-60 text-2xl font-bold -mr-3 px-2.5">
                 &times;
             </button>
         </div>
@@ -122,10 +122,13 @@
 
                             followers.data.forEach(follower => {
                                 follower_item = `
-                                    <a href="/profile/${follower.user.username}" class="flex justify-between items-center hover:bg-gray-100 border-b border-gray-100 px-4 py-2">
-                                        <div>
-                                            <div class="text-gray-800 hover:text-gray-900 font-semibold text-lg">${follower.user.name}</div>
-                                            <span class="text-gray-600 hover:text-gray-700">${follower.user.username}</span>
+                                    <a href="/profile/${follower.user.username}" class="flex justify-between items-center hover:bg-gray-100 border-b border-gray-100 px-3 py-2">
+                                        <div class="flex justify-start items-start">
+                                            <img src="${follower.user.profile_image}" class="block bg-gray-200 h-14 w-14 border border-gray-200 overflow-hidden" style="border-radius: 50%;">
+                                            <div class="pl-2.5 pr-1">
+                                                <div class="text-gray-800 hover:text-gray-900 font-semibold text-lg overflow-hidden whitespace-nowrap w-32">${follower.user.name}</div>
+                                                <span class="text-gray-600 hover:text-gray-700">${follower.user.username}</span>
+                                            </div>
                                         </div>
                                         <button id="profile-btn" class="bg-blue-500 text-white px-3 py-1 rounded">
                                             Profile
@@ -168,10 +171,13 @@
 
                             following.data.forEach(following => {
                                 following_item = `
-                                    <a href="/profile/${following.user.username}" class="flex justify-between items-center hover:bg-gray-100 border-b border-gray-100 px-4 py-2">
-                                        <div>
-                                            <div class="text-gray-800 hover:text-gray-900 font-semibold text-lg">${following.user.name}</div>
-                                            <span class="text-gray-600 hover:text-gray-700">${following.user.username}</span>
+                                    <a href="/profile/${following.user.username}" class="flex justify-between items-center hover:bg-gray-100 border-b border-gray-100 px-3 py-2">
+                                        <div class="flex justify-start items-start">
+                                            <img src="${following.user.profile_image}" class="block bg-gray-200 h-14 w-14 border border-gray-200 overflow-hidden" style="border-radius: 50%;">
+                                            <div class="pl-2.5 pr-1">
+                                                <div class="text-gray-800 hover:text-gray-900 font-semibold text-lg overflow-hidden whitespace-nowrap w-32">${following.user.name}</div>
+                                                <span class="text-gray-600 hover:text-gray-700">${following.user.username}</span>
+                                            </div>
                                         </div>
                                         <button id="profile-btn" class="bg-blue-500 text-white px-3 py-1 rounded">
                                             Profile
