@@ -1,7 +1,7 @@
 <x-app-layout metaTitle="Blogs">
     <div class="py-4">
-        <div class="flex justify-center items-start max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white w-3/4 overflow-hidden shadow-md rounded-sm sm:roundedlg">
+        <div class="md:flex justify-center items-start max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white md:w-3/4 overflow-hidden shadow-md rounded-sm sm:roundedlg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     @if (session('blog_success_message'))
                         <div class="bg-green-500 text-white text-lg px-5 py-3 rounded shadow mb-5">
@@ -30,8 +30,13 @@
                                 </div>
                             </div>
                             
-                            <div class="text-base text-gray-800 post-body">
-                                {!! Str::words($blog->body, 50) !!}
+                            <div class="@if (! empty($blog->image)) flex flex-col md:flex-row items-start @endif text-base text-gray-800 post-body">
+                                @if (! empty($blog->image))
+                                    <img src="{{ Storage::url($blog->image) }}" class="block w-full md:w-1/2 lg:w-1/3 mr-4 pb-5 md:pb-0" alt="{{ $blog->title }}">
+                                @endif
+                                <div>
+                                    {!! Str::words($blog->body, 50) !!}
+                                </div>
                             </div>
                             
                             <div class="mt-5">
@@ -44,7 +49,7 @@
                 </div>
             </div>
 
-            <div class="bg-white w-1/4 md:ml-5 shadow-md rounded">
+            <div class="bg-white w-full md:w-1/4 md:ml-5 my-5 md:my-0 shadow-md rounded">
                 <div class="bg-gray-200 text-gray-700 text-lg font-semibold px-4 py-3">Popular posts</div>
 
                 <div id="popular-posts"></div>
