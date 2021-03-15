@@ -12,6 +12,9 @@ cp .env.example .env
 # Generate application key
 php artisan key:generate
 
+# Create a symbolic link between storage/public and public/storage
+php artisan storage:link
+
 # Start server
 php artisan serve
 ```
