@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -21,6 +22,7 @@ class UserResource extends JsonResource
             $this->mergeWhen($request->email, [
                 'email' => $this->email,
             ]),
+            'profile_image' => $this->profile_image == null ? '/assets/images/user placeholder.png' : Storage::url($this->profile_image),
         ];
     }
 }
