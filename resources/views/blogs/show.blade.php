@@ -8,6 +8,10 @@
                             {{ $blog->title }}
                         </h1>
 
+                        @if (! empty($blog->image))
+                            <img src="{{ Storage::url($blog->image) }}" class="block w-full my-5" alt="{{ $blog->title }}">
+                        @endif
+
                         <div class="flex items-center text-gray-600 mt-2">
                             <div>
                                 By
