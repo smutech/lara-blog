@@ -1,7 +1,7 @@
 <x-app-layout :metaTitle="$blog->title">
     <div class="py-4">
-        <div class="flex justify-center items-start max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white w-3/4 overflow-hidden shadow-md sm:roundedlg">
+        <div class="md:flex justify-center items-start max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white md:w-3/4 overflow-hidden shadow-md rounded">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="pb-3 border-b border-bottom border-gray-300">
                         <h1 class="text-semibold text-3xl">
@@ -48,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="w-1/4 md:ml-5">
+            <div class="w-full md:w-1/4 md:ml-5 my-5 md:my-0">
                 <div class="bg-white shadow-md rounded-sm overflow-hidden">
                     <div class="bg-gray-200 text-gray-700 text-lg font-semibold px-4 py-3">About author</div>
                     <div class="flex items-center px-4 py-4">

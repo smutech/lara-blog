@@ -1,7 +1,7 @@
 <x-app-layout metaTitle="Blogs">
     <div class="py-4">
         <div class="md:flex justify-center items-start max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white md:w-3/4 overflow-hidden shadow-md rounded-sm sm:roundedlg">
+            <div class="bg-white md:w-3/4 overflow-hidden shadow-md rounded">
                 <div class="p-6 bg-white border-b border-gray-200">
                     @if (session('blog_success_message'))
                         <div class="bg-green-500 text-white text-lg px-5 py-3 rounded shadow mb-5">
