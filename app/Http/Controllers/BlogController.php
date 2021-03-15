@@ -48,11 +48,21 @@ class BlogController extends Controller
             'body' => 'required',
         ]);
 
-        auth()->user()->post()->create([
+        $post = auth()->user()->post()->create([
             'slug' => Str::slug($request->title),
             'title' => $request->title,
             'body' => $request->body
         ]);
+
+        if ($request->hasFile('image')) {
+            $request->validate([
+                'image' => 'required|image'
+            ]);
+
+            $image = $request->file('image')->store('public/blog_images');
+
+            $post->update(['image' => $image]);
+        }
 
         return redirect()->route('blogs')
                         ->with('blog_success_message', 'Blog created successfully');
@@ -103,6 +113,16 @@ class BlogController extends Controller
             'title' => $request->title,
             'body' => $request->body,
         ]);
+
+        if ($request->hasFile('image')) {
+            $request->validate([
+                'image' => 'required|image'
+            ]);
+
+            $image = $request->file('image')->store('public/blog_images');
+
+            $blog->update(['image' => $image]);
+        }
 
         return redirect()
                 ->route('edit-blog', Str::slug($request->title))
