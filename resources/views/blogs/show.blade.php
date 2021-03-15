@@ -47,7 +47,7 @@
                     <div class="bg-gray-200 text-gray-700 text-lg font-semibold px-4 py-3">About author</div>
                     <div class="flex items-center px-4 py-4">
                         <div class="bg-gray-300 rounded-full overflow-hidden h-20 w-20">
-                            <img src="" class="block" alt="{{ $blog->user->name }}'s profile photo">
+                            <img src="{{ $blog->user->profile_image == null ? '/assets/images/user placeholder.png' : Storage::url($blog->user->profile_image) }}" class="block" alt="{{ $blog->user->name }}'s profile photo">
                         </div>
                         <div class="ml-3.5">
                             <a href="{{ route('profile', $blog->user->username) }}" class="block text-lg">
