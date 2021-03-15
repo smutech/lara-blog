@@ -51,7 +51,7 @@
                     <div class="flex flex-col justify-center">
                         <div class="flex justify-center items-center py-5">
                             <label for="avatar-upload" class="rounded-full shadow overflow-hidden h-40 w-40 bg-gray-700 text-white hover:opacity-90 cursor-pointer">
-                                <img src="" class="h-40 w-40" alt="{{ $profile->name }}'s avatar">
+                                <img src="{{ $profile->profile_image == null ? '/assets/images/user placeholder.png' : Storage::url($profile->profile_image) }}" class="h-40 w-40" style="object-fit: cover;" alt="{{ $profile->name }}'s avatar">
                             </label>
                         </div>
                         <input type="file" name="avatar" id="avatar-upload" class="hidden">
