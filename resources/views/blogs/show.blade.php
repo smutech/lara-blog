@@ -30,19 +30,21 @@
                         {!! nl2br($blog->body) !!}
                     </div>
 
-                    <hr class="my-5 border-t border-gray-300">
+                    @if ($blog->user->id == auth()->user()->id)
+                        <hr class="my-5 border-t border-gray-300">
 
-                    <div class="mt-5">
-                        <a href="{{ route('edit-blog', $blog) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Edit</a>
+                        <div class="mt-5">
+                            <a href="{{ route('edit-blog', $blog) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">Edit</a>
 
-                        <form action="{{ route('delete-blog', $blog) }}" method="post" class="inline-block">
-                            @csrf
-                            @method('DELETE')
-                            <x-button class="ml-1">
-                                {{ __('Delete') }}
-                            </x-button>
-                        </form>
-                    </div>
+                            <form action="{{ route('delete-blog', $blog) }}" method="post" class="inline-block">
+                                @csrf
+                                @method('DELETE')
+                                <x-button class="ml-1">
+                                    {{ __('Delete') }}
+                                </x-button>
+                            </form>
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -51,13 +53,18 @@
                     <div class="bg-gray-200 text-gray-700 text-lg font-semibold px-4 py-3">About author</div>
                     <div class="flex items-center px-4 py-4">
                         <div class="bg-gray-300 rounded-full overflow-hidden h-20 w-20">
-                            <img src="{{ $blog->user->profile_image == null ? '/assets/images/user placeholder.png' : Storage::url($blog->user->profile_image) }}" class="block" alt="{{ $blog->user->name }}'s profile photo">
+                            <img src="{{ $blog->user->profile_image == null ? '/assets/images/user placeholder.png' : Storage::url($blog->user->profile_image) }}" class="block h-20 w-20" style="border-radius: 50%;" alt="{{ $blog->user->name }}'s profile photo">
                         </div>
                         <div class="ml-3.5">
                             <a href="{{ route('profile', $blog->user->username) }}" class="block text-lg">
                                 {{ $blog->user->name }}
                             </a>
-                            <button id="follow-btn" class="bg-blue-500 text-white outline-none mt-2 px-3 py-1 rounded hidden">Follow</button>
+
+                            @if ($blog->user->id == auth()->user()->id)
+                                <a href="{{ route('profile', $blog->user->username) }}" class="inline-block bg-blue-500 text-white outline-none mt-2 px-3 py-1 rounded">See profile</a>
+                            @else
+                                <button id="follow-btn" class="bg-blue-500 text-white outline-none mt-2 px-3 py-1 rounded hidden">Follow</button>
+                            @endif
                         </div>
                     </div>
                 </div>
