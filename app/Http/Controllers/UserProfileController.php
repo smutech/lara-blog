@@ -6,6 +6,8 @@ use App\Models\Blog;
 use App\Models\User;
 use App\Models\Follower;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class UserProfileController extends Controller
 {
@@ -98,7 +100,39 @@ class UserProfileController extends Controller
      */
     public function update(Request $request)
     {
-        auth()->user()->update($request->only(['name', 'username', 'email']));
+        if ($request->hasFile('avatar')) {
+            $request->validate([
+                'avatar' => 'required|image',
+            ]);
+
+            $profile_image = $request->file('avatar')->store('public/profile_images');
+
+            auth()->user()->update(['profile_image' => $profile_image]);
+        }
+
+
+        $username = auth()->user()->username;
+        $email = auth()->user()->email;
+
+        $request->validate([
+            'name' => 'required|min:3',
+            'username' => [
+                'required',
+                'min:3',
+                Rule::unique('App\Models\User')->ignore($username, 'username')
+            ],
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('App\Models\User')->ignore($email, 'email')
+            ]
+        ]);
+
+        auth()->user()->update([
+            'name' => $request->name,
+            'username' => $request->username,
+            'email' => $request->email
+        ]);
         
         return redirect()->route('edit-profile')
                         ->with('profile_success_message', 'Your profile has been updated successfully');
