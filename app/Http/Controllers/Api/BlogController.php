@@ -34,4 +34,21 @@ class BlogController extends Controller
     {
         return new BlogResource(Blog::findOrFail($id));
     }
+
+    /**
+     * Display the specified blog resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update_view_count($id)
+    {
+        $blog = Blog::findOrFail($id);
+
+        $blog->update([
+            'view_count' => $blog->view_count + 1
+        ]);
+
+        return ['view_count' => $blog->view_count];
+    }
 }
