@@ -19,9 +19,21 @@ class UserPostsController extends Controller
      */
     public function index(Request $request, User $user)
     {
+        $except_post_id = $request->query('except') ?? null;
         $limit = $request->query('limit');
 
-        $blogs = Blog::where('user_id', $user->id)->latest()->with('user')->paginate($limit)->appends(['limit' => $limit]);
+        if ($except_post_id == null) {
+            $blogs = Blog::where('user_id', $user->id)
+                            ->latest()->with('user')->paginate($limit)
+                            ->appends(['limit' => $limit]);
+        }
+        else {
+            $blogs = Blog::where('user_id', $user->id)
+                            ->where('id', '!=', $except_post_id)
+                            ->latest()->with('user')->paginate($limit)
+                            ->appends(['except' => $except_post_id, 'limit' => $limit]);
+        }
+
         
         return BlogResource::collection($blogs);
     }
