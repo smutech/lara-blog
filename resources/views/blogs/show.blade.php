@@ -30,7 +30,7 @@
                         {!! nl2br($blog->body) !!}
                     </div>
 
-                    @if ($blog->user->id == auth()->user()->id)
+                    @if (auth()->check() && ($blog->user->id == auth()->id()))
                         <hr class="my-5 border-t border-gray-300">
 
                         <div class="mt-5">
@@ -60,7 +60,7 @@
                                 {{ $blog->user->name }}
                             </a>
 
-                            @if ($blog->user->id == auth()->user()->id)
+                            @if (auth()->check() && ($blog->user->id == auth()->id()))
                                 <a href="{{ route('profile', $blog->user->username) }}" class="inline-block bg-blue-500 text-white outline-none mt-2 px-3 py-1 rounded">See profile</a>
                             @else
                                 <button id="follow-btn" class="bg-blue-500 text-white outline-none mt-2 px-3 py-1 rounded hidden">Follow</button>
@@ -101,22 +101,24 @@
             });
 
 
-            // Check if authenticated user follows current blog post user or not
             let follow_btn = document.getElementById('follow-btn');
 
-            fetch('{{ route('show-follow-status', [ $blog->user->id, auth()->id() ]) }}')
-                .then(res => res.json())
-                .then(follow => {
-                    follow_btn.classList.remove('hidden')
-                    follow_btn.innerText = follow.text;
-                })
-                .catch(err => console.error(err));
+            @auth
+                // Check if authenticated user follows current blog post user or not
+                fetch('{{ route('show-follow-status', [ $blog->user->id, auth()->id() ]) }}')
+                    .then(res => res.json())
+                    .then(follow => {
+                        follow_btn.classList.remove('hidden')
+                        follow_btn.innerText = follow.text;
+                    })
+                    .catch(err => console.error(err));
+            @endauth
 
 
             // Follow user
             follow_btn.addEventListener('click', () => {
                 const data = {
-                    follower_id: {{ auth()->id() }}
+                    follower_id: {{ auth()->id() ?? 'null' }}
                 };
 
                 let options = {
