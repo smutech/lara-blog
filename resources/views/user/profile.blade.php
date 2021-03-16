@@ -114,7 +114,9 @@
                 {
                     follower_list.innerHTML = `<div class="text-gray-700 text-xl text-center py-5">Loading...</div>`;
 
-                    fetch('{{ route('followers', $profile->id) }}')
+                    let followers_list_api_url = '{{ route('followers', $profile->id) }}';
+
+                    fetch(followers_list_api_url)
                         .then(res => res.json())
                         .then(followers => {
                             follower_list.innerHTML = '';
@@ -163,7 +165,9 @@
                 {
                     following_list.innerHTML = `<div class="text-gray-700 text-xl text-center py-5">Loading...</div>`;
 
-                    fetch('{{ route('following', $profile->id) }}')
+                    let following_list_api_url = '{{ route('following', $profile->id) }}';
+
+                    fetch(following_list_api_url)
                         .then(res => res.json())
                         .then(following => {
                             following_list.innerHTML = '';
