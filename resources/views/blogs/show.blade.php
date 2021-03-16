@@ -70,7 +70,7 @@
                 </div>
 
 
-                <div class="bg-white shadow-md rounded-sm overflow-hidden mt-5">
+                <div id="author-posts-col" class="hidden bg-white shadow-md rounded-sm overflow-hidden mt-5">
                     <div class="bg-gray-200 text-gray-700 text-lg font-semibold px-4 py-3">More posts from this author</div>
 
                     <div id="author-posts"></div>
@@ -85,6 +85,10 @@
         fetch(user_blog_api_url)
             .then(res => res.json())
             .then(posts => {
+                if (posts.data.length > 0) {
+                    document.getElementById('author-posts-col').classList.remove('hidden');
+                }
+
                 posts.data.forEach(post => {
                     let post_item = `
                         <a href="${post.uri}" class="block bg-white hover:bg-gray-100 focus:bg-gray-100 px-4 py-2 border-b border-gray-100">
