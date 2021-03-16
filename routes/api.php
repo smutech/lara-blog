@@ -31,6 +31,7 @@ Route::group([], function () {
     Route::get('{user:username}/blogs', [UserPostsController::class, 'index'])->name('user-blogs-api');
     Route::get('blogs', [BlogController::class, 'index'])->name('blogs-api');
     Route::get('blogs/{id}', [BlogController::class, 'show']);
+    Route::put('blogs/{id}', [BlogController::class, 'update_view_count'])->name('update-post-view-count');
 
     Route::post('follow/{id}', [FollowController::class, 'store'])->name('follow-user');
     Route::get('follow-status/{user_id}/{follower_id}', [FollowController::class, 'show'])->name('show-follow-status');
