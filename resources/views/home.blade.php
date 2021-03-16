@@ -58,7 +58,9 @@
     </div>
 
     <script>
-        fetch('{{ route('blogs-api', ['limit' => 5]) }}')
+        let popular_posts_api_url = '{{ route('blogs-api', ['limit' => 5]) }}';
+
+        fetch(popular_posts_api_url)
             .then(res => res.json())
             .then(posts => {
                 posts.data.forEach(post => {
