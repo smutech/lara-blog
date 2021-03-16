@@ -80,7 +80,9 @@
     </div>
 
     <script>
-        fetch('{{ route('user-blogs-api', ['user' => $blog->user->username, 'limit' => 5]) }}')
+        let user_blog_api_url = '{{ route('user-blogs-api', ['user' => $blog->user->username, 'except' => $blog->id, 'limit' => 5]) }}';
+
+        fetch(user_blog_api_url)
             .then(res => res.json())
             .then(posts => {
                 posts.data.forEach(post => {
@@ -105,7 +107,9 @@
 
             @auth
                 // Check if authenticated user follows current blog post user or not
-                fetch('{{ route('show-follow-status', [ $blog->user->id, auth()->id() ]) }}')
+                let show_follow_status_api_url = '{{ route('show-follow-status', [ $blog->user->id, auth()->id() ]) }}';
+
+                fetch(show_follow_status_api_url)
                     .then(res => res.json())
                     .then(follow => {
                         follow_btn.classList.remove('hidden')
@@ -129,7 +133,9 @@
                     })
                 };
 
-                fetch('{{ route('follow-user', $blog->user->id) }}', options)
+                let follow_user_api_url = '{{ route('follow-user', $blog->user->id) }}';
+
+                fetch(follow_user_api_url, options)
                     .then(res => res.json())
                     .then(follow => {
                         if (follow.error) { console.error('Error following.'); }
