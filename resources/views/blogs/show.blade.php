@@ -52,11 +52,11 @@
                 <div class="bg-white shadow-md rounded-sm overflow-hidden">
                     <div class="bg-gray-200 text-gray-700 text-lg font-semibold px-4 py-3">About author</div>
                     <div class="flex items-center px-4 py-4">
-                        <div class="bg-gray-300 rounded-full overflow-hidden h-20 w-20">
-                            <img src="{{ $blog->user->profile_image == null ? '/assets/images/user placeholder.png' : Storage::url($blog->user->profile_image) }}" class="block h-20 w-20" style="border-radius: 50%;" alt="{{ $blog->user->name }}'s profile photo">
+                        <div class="bg-gray-300 overflow-hidden h-20 w-20" style="border-radius: 50%;">
+                            <img src="{{ $blog->user->profile_image == null ? '/assets/images/user placeholder.png' : Storage::url($blog->user->profile_image) }}" class="block h-full w-full" style="border-radius: 50%; object-fit: cover;" alt="{{ $blog->user->name }}'s profile photo">
                         </div>
-                        <div class="ml-3.5">
-                            <a href="{{ route('profile', $blog->user->username) }}" class="block text-lg">
+                        <div class="ml-3.5" style="width: calc(100% - 6rem);">
+                            <a href="{{ route('profile', $blog->user->username) }}" class="block text-lg overflow-hidden whitespace-nowrap overflow-ellipsis">
                                 {{ $blog->user->name }}
                             </a>
 
