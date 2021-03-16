@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,11 +22,9 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::latest()->with('user')->paginate(15);
-        $popular_blogs = Blog::orderBy('view_count')->with('user')->take(3)->get();
 
         return view('blogs.index', [
-            'blogs' => $blogs,
-            'popular_blogs' => $popular_blogs
+            'blogs' => $blogs
         ]);
     }
 
