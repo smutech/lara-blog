@@ -80,6 +80,21 @@
     </div>
 
     <script>
+        let update_post_view_count_api_url = '{{ route('update-post-view-count', $blog->id) }}';
+
+        let options = {
+            method: 'PUT',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        };
+
+        fetch(update_post_view_count_api_url, options)
+            .then(res => res.text())
+            .then(data => data)
+            .catch(err => console.error(err));
+
+        // Loads more posts of current post author
         let user_blog_api_url = '{{ route('user-blogs-api', ['user' => $blog->user->username, 'except' => $blog->id, 'limit' => 5]) }}';
 
         fetch(user_blog_api_url)
@@ -109,7 +124,8 @@
 
             let follow_btn = document.getElementById('follow-btn');
 
-            @auth
+            @if (auth()->check() && $blog->user->id != auth()->id())
+
                 // Check if authenticated user follows current blog post user or not
                 let show_follow_status_api_url = '{{ route('show-follow-status', [ $blog->user->id, auth()->id() ]) }}';
 
@@ -120,35 +136,35 @@
                         follow_btn.innerText = follow.text;
                     })
                     .catch(err => console.error(err));
-            @endauth
 
+                
+                // Follow user
+                follow_btn.addEventListener('click', () => {
+                    const data = {
+                        follower_id: {{ auth()->id() ?? 'null' }}
+                    };
 
-            // Follow user
-            follow_btn.addEventListener('click', () => {
-                const data = {
-                    follower_id: {{ auth()->id() ?? 'null' }}
-                };
+                    let options = {
+                        method: 'POST',
+                        body: JSON.stringify(data),
+                        headers: new Headers({
+                            'Content-Type': 'application/json'
+                        })
+                    };
 
-                let options = {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: new Headers({
-                        'Content-Type': 'application/json'
-                    })
-                };
+                    let follow_user_api_url = '{{ route('follow-user', $blog->user->id) }}';
 
-                let follow_user_api_url = '{{ route('follow-user', $blog->user->id) }}';
-
-                fetch(follow_user_api_url, options)
-                    .then(res => res.json())
-                    .then(follow => {
-                        if (follow.error) { console.error('Error following.'); }
-                        else {
-                            follow_btn.innerText = follow.text;
-                            follow_btn.blur();
-                        }
-                    })
-                    .catch(err => console.error(err));
-            });
+                    fetch(follow_user_api_url, options)
+                        .then(res => res.json())
+                        .then(follow => {
+                            if (follow.error) { console.error('Error following.'); }
+                            else {
+                                follow_btn.innerText = follow.text;
+                                follow_btn.blur();
+                            }
+                        })
+                        .catch(err => console.error(err));
+                });
+            @endif
     </script>
 </x-app-layout>
