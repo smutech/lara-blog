@@ -57,13 +57,13 @@
 
                         @auth
                             @if (auth()->user()->username == $profile->username)
-                                <div class="flex justify-center items-center text-lg py-1 pb-2">
+                                <div class="text-center text-lg py-1 pb-2">
                                     <a href="{{ route('edit-profile') }}" class="text-blue-500 hover:text-blue-800 focus:text-blue-800 focus:outline-none">Edit profile</a>
                                 </div>
                             @endif
                         @endauth
 
-                        <div class="flex justify-center items-center text-3xl font-light mt-1">
+                        <div class="text-center text-3xl font-light mt-1">
                             {{ $profile->name }}
 
                             @auth
@@ -73,8 +73,14 @@
                             @endauth
                         </div>
 
-                        <div class="flex justify-center items-center text-xl py-2">
+                        <div class="text-center text-xl py-2">
                             {{ $profile->username }}
+                        </div>
+
+                        <div class="text-center">
+                            @if (auth()->check() && ($profile->id != auth()->id()))
+                                <button id="follow-btn" class="bg-blue-500 text-white text-lg max-w-full outline-none my-3 px-5 pt-1.5 pb-1 rounded hidden">Follow</button>
+                            @endif
                         </div>
                         
                         <ul class="flex justify-center items-center text-xl py-2">
@@ -99,6 +105,51 @@
     </div>
 
     <script>
+        let follow_btn = document.getElementById('follow-btn');
+
+        @if (auth()->check() && $profile->id != auth()->id())
+
+            // Check if authenticated user follows current blog post user or not
+            let show_follow_status_api_url = '{{ route('show-follow-status', [ $profile->id, auth()->id() ]) }}';
+
+            fetch(show_follow_status_api_url)
+                .then(res => res.json())
+                .then(follow => {
+                    follow_btn.classList.remove('hidden')
+                    follow_btn.innerText = follow.text;
+                })
+                .catch(err => console.error(err));
+
+            
+            // Follow user
+            follow_btn.addEventListener('click', () => {
+                const data = {
+                    follower_id: {{ auth()->id() ?? 'null' }}
+                };
+
+                let options = {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    })
+                };
+
+                let follow_user_api_url = '{{ route('follow-user', $profile->id) }}';
+
+                fetch(follow_user_api_url, options)
+                    .then(res => res.json())
+                    .then(follow => {
+                        if (follow.error) { console.error('Error following.'); }
+                        else {
+                            follow_btn.innerText = follow.text;
+                            follow_btn.blur();
+                        }
+                    })
+                    .catch(err => console.error(err));
+            });
+        @endif
+
         // Show follower box and load the list of followers
         let follower_box = document.getElementById('follower-box');
         let hide_follower_box_btn = document.getElementById('hide-follower-box-btn');
