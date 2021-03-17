@@ -12,19 +12,19 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                        {{ __('Home') }}
+                    </x-nav-link>
+                    
                     @auth
-                        <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                            {{ __('Home') }}
-                        </x-nav-link>
-
                         {{-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link> --}}
-                    @endauth
 
-                    <x-nav-link :href="route('blogs')" :active="request()->routeIs('blogs')">
-                        {{ __('Blogs') }}
-                    </x-nav-link>
+                        <x-nav-link :href="route('blogs')" :active="request()->routeIs('blogs')">
+                            {{ __('Blogs') }}
+                        </x-nav-link>
+                    @endauth
 
                     @guest
                         <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
@@ -97,16 +97,18 @@
             <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
                 {{ __('Home') }}
             </x-responsive-nav-link>
-
-            {{-- @auth
+            
+            @auth    
+                {{-- @auth
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
-            @endauth --}}
-
-            <x-responsive-nav-link :href="route('blogs')" :active="request()->routeIs('blogs')">
-                {{ __('Blogs') }}
-            </x-responsive-nav-link>
+                @endauth --}}
+                    
+                <x-responsive-nav-link :href="route('blogs')" :active="request()->routeIs('blogs')">
+                    {{ __('Blogs') }}
+                </x-responsive-nav-link>
+            @endauth
         </div>
 
         @guest
