@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class FollowerSeeder extends Seeder
@@ -13,6 +14,8 @@ class FollowerSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Follower::factory(10)->create();
+        $times = User::count();
+
+        \App\Models\Follower::factory($times)->create();
     }
 }
