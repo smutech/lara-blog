@@ -1,5 +1,5 @@
 # Larablog
-Larablog is a blog post web application using [Laravel](https://github.com/laravel/laravel) 8.
+Larablog is a blog post web application using [Laravel](https://github.com/laravel/laravel) 8. Using this, you can create, view, edit, and delete blog. Follow other users and can also view others profile. The important feature is, the user you follow, their latest blog post will be shown on your home page.
 
 ## Quick start
 ```
@@ -12,7 +12,7 @@ cp .env.example .env
 # Generate application key
 php artisan key:generate
 
-# Create a symbolic link between storage/public and public/storage
+# Create symbolic link between storage/public and public/storage
 php artisan storage:link
 
 # Start server
@@ -22,6 +22,15 @@ php artisan serve
 <!-- Put this after cp .env.example .env -->
 <!-- # Run migrations and seeds
 php artisan migrate --seed -->
+
+## Features
+- Authentication <a href="https://github.com/laravel/breeze" target="_blank">(Laravel breeze)</a>
+- View profile, upload profile picture, update profile.
+- View others profile, see their followers and following.
+- See all latest blog posts. Also create, view, edit and delete blog post.
+- Follow other users.
+- The user you follow, their latest blog posts will automatically be shown on your home page.
+
 
 <!-- <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
