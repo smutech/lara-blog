@@ -25,7 +25,7 @@ php artisan migrate --seed -->
 
 ## Features
 - Authentication <a href="https://github.com/laravel/breeze" target="_blank">(Laravel breeze)</a>
-- View profile, upload profile picture, update profile.
+- View profile, update profile, upload profile picture.
 - View others profile, see their followers and following.
 - See all latest blog posts. Also create, view, edit and delete blog post.
 - Follow other users.
