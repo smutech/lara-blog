@@ -3,11 +3,8 @@ Larablog is a blog post web application using [Laravel](https://github.com/larav
 
 ## Quick start
 ```
-# Install composer dependencies
+# Install dependencies
 composer install
-
-# Install NPM dependencies
-npm install
 
 # Create environment
 cp .env.example .env
