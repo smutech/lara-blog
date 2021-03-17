@@ -121,24 +121,30 @@
                         .then(followers => {
                             follower_list.innerHTML = '';
 
-                            followers.data.forEach(follower => {
-                                follower_item = `
-                                    <a href="/profile/${follower.user.username}" class="flex justify-between items-center hover:bg-gray-100 border-b border-gray-100 px-3 py-2">
-                                        <div class="flex justify-start items-start">
-                                            <img src="${follower.user.profile_image}" class="block bg-gray-200 h-14 w-14 border border-gray-200 overflow-hidden" style="border-radius: 50%;">
-                                            <div class="pl-2.5 pr-1">
-                                                <div class="text-gray-800 hover:text-gray-900 font-semibold text-lg overflow-hidden whitespace-nowrap w-32">${follower.user.name}</div>
-                                                <span class="text-gray-600 hover:text-gray-700">${follower.user.username}</span>
+                            if (followers.data.length > 0)
+                            {
+                                followers.data.forEach(follower => {
+                                    follower_item = `
+                                        <a href="/profile/${follower.user.username}" class="flex justify-between items-center hover:bg-gray-100 border-b border-gray-100 px-3 py-2">
+                                            <div class="flex justify-start items-start">
+                                                <img src="${follower.user.profile_image}" class="block bg-gray-200 h-14 w-14 border border-gray-200 overflow-hidden" style="border-radius: 50%;">
+                                                <div class="pl-2.5 pr-1">
+                                                    <div class="text-gray-800 hover:text-gray-900 font-semibold text-lg overflow-hidden whitespace-nowrap w-32">${follower.user.name}</div>
+                                                    <span class="text-gray-600 hover:text-gray-700">${follower.user.username}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <button id="profile-btn" class="bg-blue-500 text-white px-3 py-1 rounded">
-                                            Profile
-                                        </button>
-                                    </a>
-                                `;
-
-                                follower_list.innerHTML += follower_item;
-                            });
+                                            <button id="profile-btn" class="bg-blue-500 text-white px-3 py-1 rounded">
+                                                Profile
+                                            </button>
+                                        </a>
+                                    `;
+    
+                                    follower_list.innerHTML += follower_item;
+                                });
+                            }
+                            else {
+                                follower_list.innerHTML = `<div class="text-gray-700 text-xl text-center py-5">No followers.</div>`;
+                            }
 
                             followers_loaded = true;
                         })
@@ -172,24 +178,30 @@
                         .then(following => {
                             following_list.innerHTML = '';
 
-                            following.data.forEach(following => {
-                                following_item = `
-                                    <a href="/profile/${following.user.username}" class="flex justify-between items-center hover:bg-gray-100 border-b border-gray-100 px-3 py-2">
-                                        <div class="flex justify-start items-start">
-                                            <img src="${following.user.profile_image}" class="block bg-gray-200 h-14 w-14 border border-gray-200 overflow-hidden" style="border-radius: 50%;">
-                                            <div class="pl-2.5 pr-1">
-                                                <div class="text-gray-800 hover:text-gray-900 font-semibold text-lg overflow-hidden whitespace-nowrap w-32">${following.user.name}</div>
-                                                <span class="text-gray-600 hover:text-gray-700">${following.user.username}</span>
+                            if (following.data.length > 0)
+                            {
+                                following.data.forEach(following => {
+                                    following_item = `
+                                        <a href="/profile/${following.user.username}" class="flex justify-between items-center hover:bg-gray-100 border-b border-gray-100 px-3 py-2">
+                                            <div class="flex justify-start items-start">
+                                                <img src="${following.user.profile_image}" class="block bg-gray-200 h-14 w-14 border border-gray-200 overflow-hidden" style="border-radius: 50%;">
+                                                <div class="pl-2.5 pr-1">
+                                                    <div class="text-gray-800 hover:text-gray-900 font-semibold text-lg overflow-hidden whitespace-nowrap w-32">${following.user.name}</div>
+                                                    <span class="text-gray-600 hover:text-gray-700">${following.user.username}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <button id="profile-btn" class="bg-blue-500 text-white px-3 py-1 rounded">
-                                            Profile
-                                        </button>
-                                    </a>
-                                `;
-
-                                following_list.innerHTML += following_item;
-                            });
+                                            <button id="profile-btn" class="bg-blue-500 text-white px-3 py-1 rounded">
+                                                Profile
+                                            </button>
+                                        </a>
+                                    `;
+    
+                                    following_list.innerHTML += following_item;
+                                });
+                            }
+                            else {
+                                following_list.innerHTML = `<div class="text-gray-700 text-xl text-center py-5">You're not following anyone.</div>`;
+                            }
 
                             following_loaded = true;
                         })
