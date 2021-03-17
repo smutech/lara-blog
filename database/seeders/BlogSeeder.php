@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class BlogSeeder extends Seeder
@@ -13,6 +14,9 @@ class BlogSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Blog::factory(25)->create();
+        $user_count = User::count();
+        $times = $user_count * $user_count;
+
+        \App\Models\Blog::factory($times)->create();
     }
 }
