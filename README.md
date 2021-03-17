@@ -17,7 +17,7 @@ php artisan key:generate
 # Run migrations and seeds
 php artisan migrate --seed
 
-# Create symbolic link between storage/public and public/storage
+# Create symbolic link between storage/app/public and public/storage
 php artisan storage:link
 
 # Start server
